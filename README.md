@@ -1,69 +1,60 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Conversation Flow Builder
 
-Currently, two official plugins are available:
+A **React + TypeScript + Vite** app for visually designing chatbot conversation flows. Export your flows as YAML or JSON for use in Playwright/MCP tests.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **Visual Editor**: Drag-and-drop interface to build conversation flows.
+- **Nodes**: Each node represents a step in the conversation, with:
+  - `id`: Unique identifier
+  - `label`: Human-friendly label (editable)
+  - *(Planned)* `utterance`: What the user says at this step
+  - *(Planned)* `expected`: Object with:
+    - `intent`: Expected intent from the chatbot API
+    - `key`: Key expected in the chatbot response
+    - `bot`: Expected chatbot reply
+- **Edges**: Connect nodes to represent conversation branching (`source` and `target`).
+- **Editing**:
+  - Add new nodes (button)
+  - Edit node labels
+  - Connect nodes by dragging
+- **Export**: Output flows as simplified YAML or JSON for test automation.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Example Export (YAML)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```yaml
+nodes:
+  - id: "1"
+    label: "Start: User utterance"
+edges:
+  - source: "1"
+    target: "2"
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. **Install dependencies:**
+   ```sh
+   npm install
+   ```
+2. **Start the development server:**
+   ```sh
+   npm run dev
+   ```
+3. Open [http://localhost:5173](http://localhost:5173) in your browser.
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Project Structure
+
+- `src/` — Main source code
+- `src/types/flow.ts` — Type definitions for nodes and edges
+- `public/` — Static assets
+- `vite.config.ts` — Vite configuration
+
+## Contributing
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+MIT
